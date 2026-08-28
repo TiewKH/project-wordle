@@ -25,43 +25,46 @@ function Game() {
   );
   const [numGuesses, setNumGuesses] = React.useState(0);
   const [answerIsCorrect, setAnswerIsCorrect] = React.useState(false);
-  const inputIsDisabled = numGuesses > 5 || answerIsCorrect;
-  const gameHasEnded = numGuesses > 5 && !answerIsCorrect;
+  const inputIsDisabled =
+    numGuesses > NUM_OF_GUESSES_ALLOWED - 1 || answerIsCorrect;
+  const gameHasEnded =
+    numGuesses > NUM_OF_GUESSES_ALLOWED - 1 && !answerIsCorrect;
 
   const checkResults = (guess) => {
     const guessResults = checkGuess(guess, answer);
     let nextGuesses = [...guesses];
     nextGuesses[numGuesses] = {
-      guess: nextGuesses[numGuesses]["guess"].map((guessEntry, index) => ({
+      guess: nextGuesses[numGuesses].guess.map((guessEntry, index) => ({
         letter: guessResults[index].letter,
         status: guessResults[index].status,
         id: guessEntry.id,
       })),
-      id: nextGuesses[numGuesses]["id"],
+      id: nextGuesses[numGuesses].id,
     };
     setGuesses(nextGuesses);
     setNumGuesses(numGuesses + 1);
-    if (guess === answer) {
-      setAnswerIsCorrect(true)
-    }
+    if (guess === answer) setAnswerIsCorrect(true);
   };
 
   return (
     <div>
       <Guesses guesses={guesses} />
-      <GuessInput checkResults={checkResults} disabled={inputIsDisabled}/>
-      {
-        answerIsCorrect && <div className="happy banner">
+      <GuessInput checkResults={checkResults} disabled={inputIsDisabled} />
+      {answerIsCorrect && (
+        <div className="happy banner">
           <p>
             <strong>Congratulations!</strong> Got it in
             <strong> {numGuesses} guesses</strong>.
           </p>
         </div>
-      }
-      {gameHasEnded && <div className="sad banner">
-        <p>Sorry, the correct answer is <strong>{answer}</strong>.</p>
-      </div>
-      }
+      )}
+      {gameHasEnded && (
+        <div className="sad banner">
+          <p>
+            Sorry, the correct answer is <strong>{answer}</strong>.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

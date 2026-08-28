@@ -1,7 +1,7 @@
 import React from "react";
 
 function Guesses({ guesses }) {
-  console.log(guesses)
+  console.log(guesses);
   return (
     <div className="guess-results">
       {guesses.map(({ guess, id: guessId }) => {
