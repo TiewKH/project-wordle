@@ -1,2 +1,2 @@
-export * from './Guesses';
-export { default } from './Guesses';
+export * from "./Guesses";
+export { default } from "./Guesses";

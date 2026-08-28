@@ -1,10 +1,22 @@
-import React from 'react';
+import React from "react";
 
-function Guesses({guesses}) {
+function Guesses({ guesses }) {
   console.log(guesses)
-  return <div className="guess-results">
-    {guesses.map((guess) => <p className="guess" key={guess.id}>{guess.guess}</p>)}
-  </div>
+  return (
+    <div className="guess-results">
+      {guesses.map(({ guess, id: guessId }) => {
+        return (
+          <p className="guess" key={guessId}>
+            {[...guess].map(({ letter, status, id: letterId }) => (
+              <span className={`cell ${status}`} key={letterId}>
+                {letter}
+              </span>
+            ))}
+          </p>
+        );
+      })}
+    </div>
+  );
 }
 
 export default Guesses;
